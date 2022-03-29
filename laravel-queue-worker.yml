@@ -1,0 +1,22 @@
+apps:
+  - name: message-dispatch
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:work
+      - --queue=sendportal-message-dispatch
+      - --tries=5
+      - --sleep=1
+  
+  - name: webhook-process
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:work
+      - --queue=sendportal-webhook-process
+      - --tries=5
+      - --sleep=1
